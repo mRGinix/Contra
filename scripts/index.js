@@ -9,10 +9,10 @@ const game = new Game(pixiApp)
 
 document.body.appendChild(pixiApp.view)
 document.addEventListener('keydown', function (key) {
-  game.onKeyDown(key)
+  game.keyboardProcessor.onKeyDown(key)
 })
 document.addEventListener('keyup', function (key) {
-  game.onKeyUp(key)
+  game.keyboardProcessor.onKeyUp(key)
 })
 
 pixiApp.ticker.add(game.update, game)

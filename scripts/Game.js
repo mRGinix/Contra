@@ -1,11 +1,14 @@
 import Hero from './Entities/Hero.js'
 import Platform from './Entities/Platforms/Platform.js'
 import PlatformFactory from './Entities/Platforms/PlatformFactory.js'
+import KeyboardProcessor from './KeyboardProcessor.js'
 
 export default class Game {
   #pixiApp
   #hero
   #platforms = []
+
+  keyboardProcessor
 
   constructor(pixiApp) {
     this.#pixiApp = pixiApp
@@ -20,6 +23,23 @@ export default class Game {
     this.#platforms.push(platformFactory.createPlatform(50, 400))
     this.#platforms.push(platformFactory.createPlatform(200, 450))
     this.#platforms.push(platformFactory.createPlatform(400, 400))
+
+    this.keyboardProcessor = new KeyboardProcessor(this)
+    this.keyboardProcessor.getButton('ArrowUp').executeDown = function () {
+      this.#hero.jump()
+    }
+    this.keyboardProcessor.getButton('ArrowLeft').executeDown = function () {
+      this.#hero.startLeftMove()
+    }
+    this.keyboardProcessor.getButton('ArrowLeft').executeUp = function () {
+      this.#hero.stopLeftMove()
+    }
+    this.keyboardProcessor.getButton('ArrowRight').executeDown = function () {
+      this.#hero.startRightMove()
+    }
+    this.keyboardProcessor.getButton('ArrowRight').executeUp = function () {
+      this.#hero.stopRightMove()
+    }
   }
 
   update() {
@@ -54,39 +74,5 @@ export default class Game {
       entity.y < area.y + area.height &&
       entity.y + entity.height > area.y
     )
-  }
-
-  onKeyDown(key) {
-    const LEFT = 37
-    const RIGHT = 39
-    const UP = 38
-    const DOWN = 40
-    const A = 65
-    const S = 83
-
-    if (key.keyCode == LEFT) {
-      this.#hero.startLeftMove()
-    }
-    if (key.keyCode == RIGHT) {
-      this.#hero.startRightMove()
-    }
-    if (key.keyCode == UP) {
-      this.#hero.jump()
-    }
-  }
-
-  onKeyUp(key) {
-    const LEFT = 37
-    const RIGHT = 39
-    const UP = 38
-    const DOWN = 40
-    const A = 65
-    const S = 83
-    if (key.keyCode == LEFT) {
-      this.#hero.stopLeftMove()
-    }
-    if (key.keyCode == RIGHT) {
-      this.#hero.stopRightMove()
-    }
   }
 }
