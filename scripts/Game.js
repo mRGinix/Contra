@@ -1,5 +1,6 @@
 import Hero from './Entities/Hero.js'
-import Platform from './Entities/Platform.js'
+import Platform from './Entities/Platforms/Platform.js'
+import PlatformFactory from './Entities/Platforms/PlatformFactory.js'
 
 export default class Game {
   #pixiApp
@@ -14,24 +15,11 @@ export default class Game {
     this.#hero.y = 100
     this.#pixiApp.stage.addChild(this.#hero)
 
-    const platform1 = new Platform()
-    platform1.x = 50
-    platform1.y = 400
-    this.#pixiApp.stage.addChild(platform1)
+    const platformFactory = new PlatformFactory(this.#pixiApp)
 
-    const platform2 = new Platform()
-    platform2.x = 200
-    platform2.y = 450
-    this.#pixiApp.stage.addChild(platform2)
-
-    const platform3 = new Platform()
-    platform3.x = 400
-    platform3.y = 400
-    this.#pixiApp.stage.addChild(platform3)
-
-    this.#platform.push(platform1)
-    this.#platform.push(platform2)
-    this.#platform.push(platform3)
+    this.#platform.push(platformFactory.createPlatform(50, 400))
+    this.#platform.push(platformFactory.createPlatform(200, 450))
+    this.#platform.push(platformFactory.createPlatform(400, 400))
   }
 
   update() {
@@ -82,7 +70,7 @@ export default class Game {
     if (key.keyCode == RIGHT) {
       this.#hero.startRightMove()
     }
-    if (key.keyCode == S) {
+    if (key.keyCode == UP) {
       this.#hero.jump()
     }
   }

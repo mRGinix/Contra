@@ -1,17 +1,18 @@
 import Game from './Game.js'
 import * as PIXI from '../pixi/pixi.mjs'
 
-const _pixiApp = new PIXI.Application({
+const pixiApp = new PIXI.Application({
   width: 1024,
   height: 768,
 })
+const game = new Game(pixiApp)
 
-const game = new Game(_pixiApp)
-_pixiApp.ticker.add(game.update, game)
-document.body.appendChild(_pixiApp.view)
+document.body.appendChild(pixiApp.view)
 document.addEventListener('keydown', function (key) {
   game.onKeyDown(key)
 })
 document.addEventListener('keyup', function (key) {
   game.onKeyUp(key)
 })
+
+pixiApp.ticker.add(game.update, game)
