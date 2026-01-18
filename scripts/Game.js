@@ -5,7 +5,7 @@ import PlatformFactory from './Entities/Platforms/PlatformFactory.js'
 export default class Game {
   #pixiApp
   #hero
-  #platform = []
+  #platforms = []
 
   constructor(pixiApp) {
     this.#pixiApp = pixiApp
@@ -17,9 +17,9 @@ export default class Game {
 
     const platformFactory = new PlatformFactory(this.#pixiApp)
 
-    this.#platform.push(platformFactory.createPlatform(50, 400))
-    this.#platform.push(platformFactory.createPlatform(200, 450))
-    this.#platform.push(platformFactory.createPlatform(400, 400))
+    this.#platforms.push(platformFactory.createPlatform(50, 400))
+    this.#platforms.push(platformFactory.createPlatform(200, 450))
+    this.#platforms.push(platformFactory.createPlatform(400, 400))
   }
 
   update() {
@@ -30,14 +30,14 @@ export default class Game {
 
     this.#hero.update()
 
-    for (let i = 0; i < this.#platform.length; i++) {
-      if (!this.isCheckAABB(this.#hero, this.#platform[i])) {
+    for (let i = 0; i < this.#platforms.length; i++) {
+      if (!this.isCheckAABB(this.#hero, this.#platforms[i])) {
         continue
       }
 
       const curryY = this.#hero.y
       this.#hero.y = prevPoint.y
-      if (!this.isCheckAABB(this.#hero, this.#platform[i])) {
+      if (!this.isCheckAABB(this.#hero, this.#platforms[i])) {
         this.#hero.stay()
         continue
       }
