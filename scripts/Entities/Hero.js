@@ -1,5 +1,9 @@
 import { Container, Graphics } from '../../pixi/pixi.mjs'
 
+const States = {
+  Stay: 'stay',
+  Jump: 'jump',
+}
 export default class Hero extends Container {
   #GRAVITY_FORCE = 0.015
   #SPEED = 1.5
@@ -16,6 +20,8 @@ export default class Hero extends Container {
     left: 0,
     right: 0,
   }
+
+  #state = States.Stay
 
   constructor() {
     super()
@@ -36,10 +42,15 @@ export default class Hero extends Container {
   }
 
   stay() {
+    this.#state = States.Stay
     this.#velocityY = 0
   }
 
   jump() {
+    if (this.#state == States.Jump) {
+      return
+    }
+    this.#state = States.Jump
     this.#velocityY -= this.#JUMP_FORCE
   }
 
