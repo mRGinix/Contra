@@ -51,20 +51,34 @@ export default class Game {
     this.#hero.update()
 
     for (let i = 0; i < this.#platforms.length; i++) {
-      if (!this.isCheckAABB(this.#hero, this.#platforms[i])) {
-        continue
-      }
-
-      const curryY = this.#hero.y
-      this.#hero.y = prevPoint.y
-      if (!this.isCheckAABB(this.#hero, this.#platforms[i])) {
+      const collisionResult = this.getPlatfromCollisionResult(this.#hero, this.#platforms[i], prevPoint)
+      if (collisionResult.vertical == true) {
         this.#hero.stay()
-        continue
       }
-
-      this.#hero.y = curryY
-      this.#hero.x = prevPoint.x
     }
+  }
+
+  getPlatfromCollisionResult(character, platform, prevPoint) {
+    const collisionResult = {
+      horizontal: false,
+      vertical: false,
+    }
+
+    if (!this.isCheckAABB(character, platform)) {
+      return collisionResult
+    }
+
+    const curryY = character.y
+    character.y = prevPoint.y
+    if (!this.isCheckAABB(character, platform)) {
+      collisionResult.vertical = true
+      return collisionResult
+    }
+
+    character.y = curryY
+    character.x = prevPoint.x
+    collisionResult.horizontal = true
+    return collisionResult
   }
 
   isCheckAABB(entity, area) {
