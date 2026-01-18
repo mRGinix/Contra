@@ -82,6 +82,9 @@ export default class Game {
     if (key.keyCode == RIGHT) {
       this.#hero.startRightMove()
     }
+    if (key.keyCode == S) {
+      this.#hero.jump()
+    }
   }
 
   onKeyUp(key) {
@@ -92,10 +95,10 @@ export default class Game {
     const A = 65
     const S = 83
     if (key.keyCode == LEFT) {
-      this.#hero.stop()
+      this.#hero.stopLeftMove()
     }
     if (key.keyCode == RIGHT) {
-      this.#hero.stop()
+      this.#hero.stopRightMove()
     }
   }
 }
