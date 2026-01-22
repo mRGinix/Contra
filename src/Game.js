@@ -20,13 +20,13 @@ export default class Game {
 
     const platformFactory = new PlatformFactory(this.#pixiApp)
 
-    this.#platforms.push(platformFactory.createPlatform(100, 450))
-    this.#platforms.push(platformFactory.createPlatform(300, 450))
-    this.#platforms.push(platformFactory.createPlatform(500, 450))
-    this.#platforms.push(platformFactory.createPlatform(700, 450))
-    this.#platforms.push(platformFactory.createPlatform(900, 450))
+    this.#platforms.push(platformFactory.createPlatform(100, 420))
+    this.#platforms.push(platformFactory.createPlatform(300, 420))
+    this.#platforms.push(platformFactory.createPlatform(500, 420))
+    this.#platforms.push(platformFactory.createPlatform(700, 420))
+    this.#platforms.push(platformFactory.createPlatform(900, 420))
 
-    this.#platforms.push(platformFactory.createPlatform(300, 580))
+    this.#platforms.push(platformFactory.createPlatform(300, 560))
 
     this.#platforms.push(platformFactory.createBox(0, 738))
     this.#platforms.push(platformFactory.createBox(200, 738))

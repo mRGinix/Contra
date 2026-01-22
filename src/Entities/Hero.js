@@ -1,4 +1,4 @@
-import { Container, Graphics } from '../../pixi/pixi.mjs'
+import { Container, Graphics } from '../../lib/pixi.mjs'
 
 const States = {
   Stay: 'stay',
@@ -6,8 +6,8 @@ const States = {
   FlyDown: 'flyDown',
 }
 export default class Hero extends Container {
-  #GRAVITY_FORCE = 0.02
-  #SPEED = 2.3
+  #GRAVITY_FORCE = 0.018
+  #SPEED = 2
   #JUMP_FORCE = 3
   #velocityX = 0
   #velocityY = 0
@@ -24,14 +24,22 @@ export default class Hero extends Container {
 
   #state = States.Stay
 
+  #bounds = {
+    width: 20,
+    height: 90,
+  }
+
   constructor() {
     super()
 
     const view = new Graphics()
     view.lineStyle(1, 0xffff00)
     view.drawRect(0, 0, 20, 90)
+    view.drawRect(0, 30, 60, 10)
 
     this.addChild(view)
+
+    // this.scale.x *= -1
   }
 
   update() {
@@ -110,8 +118,8 @@ export default class Hero extends Container {
   getRect() {
     this.#rect.x = this.x
     this.#rect.y = this.y
-    this.#rect.width = this.width
-    this.#rect.height = this.height
+    this.#rect.width = this.#bounds.width
+    this.#rect.height = this.#bounds.height
 
     return this.#rect
   }
