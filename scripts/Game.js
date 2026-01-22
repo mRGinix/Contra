@@ -20,26 +20,20 @@ export default class Game {
 
     const platformFactory = new PlatformFactory(this.#pixiApp)
 
-    this.#platforms.push(platformFactory.createPlatform(50, 400))
-    this.#platforms.push(platformFactory.createPlatform(200, 450))
-    this.#platforms.push(platformFactory.createPlatform(400, 400))
+    this.#platforms.push(platformFactory.createPlatform(100, 450))
+    this.#platforms.push(platformFactory.createPlatform(300, 450))
+    this.#platforms.push(platformFactory.createPlatform(500, 450))
+    this.#platforms.push(platformFactory.createPlatform(700, 450))
+    this.#platforms.push(platformFactory.createPlatform(900, 450))
+
+    this.#platforms.push(platformFactory.createPlatform(300, 580))
+
+    this.#platforms.push(platformFactory.createPlatform(0, 738))
+    this.#platforms.push(platformFactory.createPlatform(200, 738))
+    this.#platforms.push(platformFactory.createPlatform(400, 708))
 
     this.keyboardProcessor = new KeyboardProcessor(this)
-    this.keyboardProcessor.getButton('ArrowUp').executeDown = function () {
-      this.#hero.jump()
-    }
-    this.keyboardProcessor.getButton('ArrowLeft').executeDown = function () {
-      this.#hero.startLeftMove()
-    }
-    this.keyboardProcessor.getButton('ArrowLeft').executeUp = function () {
-      this.#hero.stopLeftMove()
-    }
-    this.keyboardProcessor.getButton('ArrowRight').executeDown = function () {
-      this.#hero.startRightMove()
-    }
-    this.keyboardProcessor.getButton('ArrowRight').executeUp = function () {
-      this.#hero.stopRightMove()
-    }
+    this.setKeys()
   }
 
   update() {
@@ -51,6 +45,10 @@ export default class Game {
     this.#hero.update()
 
     for (let i = 0; i < this.#platforms.length; i++) {
+      if (this.#hero.isJumpState()) {
+        continue
+      }
+
       const collisionResult = this.getPlatfromCollisionResult(this.#hero, this.#platforms[i], prevPoint)
       if (collisionResult.vertical == true) {
         this.#hero.stay()
@@ -88,5 +86,23 @@ export default class Game {
       entity.y < area.y + area.height &&
       entity.y + entity.height > area.y
     )
+  }
+
+  setKeys() {
+    this.keyboardProcessor.getButton('ArrowUp').executeDown = function () {
+      this.#hero.jump()
+    }
+    this.keyboardProcessor.getButton('ArrowLeft').executeDown = function () {
+      this.#hero.startLeftMove()
+    }
+    this.keyboardProcessor.getButton('ArrowLeft').executeUp = function () {
+      this.#hero.stopLeftMove()
+    }
+    this.keyboardProcessor.getButton('ArrowRight').executeDown = function () {
+      this.#hero.startRightMove()
+    }
+    this.keyboardProcessor.getButton('ArrowRight').executeUp = function () {
+      this.#hero.stopRightMove()
+    }
   }
 }
