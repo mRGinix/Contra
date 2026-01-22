@@ -1,4 +1,4 @@
-import Hero from './Entities/Hero.js'
+import Hero from './Entities/Hero/Hero.js'
 import Platform from './Entities/Platforms/Platform.js'
 import PlatformFactory from './Entities/Platforms/PlatformFactory.js'
 import KeyboardProcessor from './KeyboardProcessor.js'

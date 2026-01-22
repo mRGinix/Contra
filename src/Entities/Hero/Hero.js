@@ -1,4 +1,4 @@
-import { Container, Graphics } from '../../lib/pixi.mjs'
+import { Container, Graphics } from '../../../lib/pixi.mjs'
 
 const States = {
   Stay: 'stay',
