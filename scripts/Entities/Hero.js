@@ -63,6 +63,10 @@ export default class Hero extends Container {
     return this.#state == States.Jump
   }
 
+  throwDown() {
+    this.#state = States.Jump
+  }
+
   startLeftMove() {
     this.#directionContext.left = -1
 
