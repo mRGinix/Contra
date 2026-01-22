@@ -39,7 +39,9 @@ export default class Hero extends Container {
 
     this.addChild(view)
 
-    // this.scale.x *= -1
+    view.pivot.x = 10
+    view.x = 10
+    view.scale.x *= -1
   }
 
   update() {
