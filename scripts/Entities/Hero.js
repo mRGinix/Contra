@@ -46,9 +46,11 @@ export default class Hero extends Container {
     this.y += this.#velocityY
   }
 
-  stay() {
+  stay(platformY) {
     this.#state = States.Stay
     this.#velocityY = 0
+
+    this.y = platformY - this.height
   }
 
   jump() {

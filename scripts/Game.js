@@ -30,7 +30,7 @@ export default class Game {
 
     this.#platforms.push(platformFactory.createBox(0, 738))
     this.#platforms.push(platformFactory.createBox(200, 738))
-    this.#platforms.push(platformFactory.createPlatform(400, 708))
+    this.#platforms.push(platformFactory.createBox(400, 708))
 
     this.keyboardProcessor = new KeyboardProcessor(this)
     this.setKeys()
@@ -51,7 +51,7 @@ export default class Game {
 
       const collisionResult = this.getPlatfromCollisionResult(this.#hero, this.#platforms[i], prevPoint)
       if (collisionResult.vertical == true) {
-        this.#hero.stay()
+        this.#hero.stay(this.#platforms[i].y)
       }
     }
   }
