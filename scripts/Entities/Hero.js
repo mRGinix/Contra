@@ -6,9 +6,9 @@ const States = {
   FlyDown: 'flyDown',
 }
 export default class Hero extends Container {
-  #GRAVITY_FORCE = 0.015
-  #SPEED = 1.5
-  #JUMP_FORCE = 2
+  #GRAVITY_FORCE = 0.02
+  #SPEED = 2.3
+  #JUMP_FORCE = 3
   #velocityX = 0
   #velocityY = 0
 
@@ -28,8 +28,8 @@ export default class Hero extends Container {
     super()
 
     const view = new Graphics()
-    view.lineStyle(1, 0xff0000)
-    view.drawRect(0, 0, 20, 60)
+    view.lineStyle(1, 0xffff00)
+    view.drawRect(0, 0, 20, 90)
 
     this.addChild(view)
   }
