@@ -94,4 +94,19 @@ export default class Hero extends Container {
     this.#directionContext.right = 0
     this.#movement.x = this.#directionContext.left
   }
+
+  #rect = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  }
+  getRect() {
+    this.#rect.x = this.x
+    this.#rect.y = this.y
+    this.#rect.width = this.width
+    this.#rect.height = this.height
+
+    return this.#rect
+  }
 }

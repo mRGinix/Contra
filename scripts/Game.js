@@ -57,24 +57,31 @@ export default class Game {
   }
 
   getPlatfromCollisionResult(character, platform, prevPoint) {
+    const collisionResult = this.getOrientCollisionResult(character.getRect(), platform, prevPoint)
+
+    if (collisionResult.vertical == true) {
+      character.y = prevPoint.y
+    }
+
+    return collisionResult
+  }
+
+  getOrientCollisionResult(aaRect, bbRect, aaPrevPoint) {
     const collisionResult = {
       horizontal: false,
       vertical: false,
     }
 
-    if (!this.isCheckAABB(character, platform)) {
+    if (!this.isCheckAABB(aaRect, bbRect)) {
       return collisionResult
     }
 
-    const curryY = character.y
-    character.y = prevPoint.y
-    if (!this.isCheckAABB(character, platform)) {
+    aaRect.y = aaPrevPoint.y
+    if (!this.isCheckAABB(aaRect, bbRect)) {
       collisionResult.vertical = true
       return collisionResult
     }
 
-    character.y = curryY
-    character.x = prevPoint.x
     collisionResult.horizontal = true
     return collisionResult
   }
