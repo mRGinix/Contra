@@ -5,19 +5,16 @@ export default class HeroView extends Container {
     width: 0,
     height: 0,
   }
-
   #collisionBox = {
     x: 0,
     y: 0,
     width: 0,
     height: 0,
   }
-
   #stm = {
     currentState: 'default',
     states: {},
   }
-
   #rootNode
 
   constructor() {
@@ -43,14 +40,56 @@ export default class HeroView extends Container {
     for (let key in this.#stm.states) {
       this.#rootNode.addChild(this.#stm.states[key])
     }
-
-    // view.#rootNode.scale.x *= -1
   }
 
   get collisionBox() {
     this.#collisionBox.x = this.x
     this.#collisionBox.y = this.y
     return this.#collisionBox
+  }
+
+  showStay() {
+    this.#toState('stay')
+  }
+  showStayUp() {
+    this.#toState('stayUp')
+  }
+  showRun() {
+    this.#toState('run')
+  }
+  showRunUp() {
+    this.#toState('runUp')
+  }
+  showRunDown() {
+    this.#toState('runDown')
+  }
+  showLay() {
+    this.#toState('lay')
+  }
+  showJump() {
+    this.#toState('jump')
+  }
+  showFall() {
+    this.#toState('fall')
+  }
+
+  flip(direction) {
+    switch (direction) {
+      case 1:
+      case -1:
+        this.#rootNode.scale.x = direction
+    }
+  }
+
+  #toState(key) {
+    if (this.#stm.currentState == key) {
+      return
+    }
+    for (let key in this.#stm.states) {
+      this.#stm.states[key].visible = false
+    }
+    this.#stm.states[key].visible = true
+    this.#stm.currentState = key
   }
 
   #createNodeStructure() {
