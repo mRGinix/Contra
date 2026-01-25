@@ -5,7 +5,7 @@ const States = {
   Jump: 'jump',
   FlyDown: 'flyDown',
 }
-export default class Hero{
+export default class Hero {
   #GRAVITY_FORCE = 0.018
   #SPEED = 2
   #JUMP_FORCE = 3
@@ -29,22 +29,24 @@ export default class Hero{
   constructor(stage) {
     this.#view = new HeroView()
     stage.addChild(this.#view)
+
+    this.#view.showStay()
   }
 
-    get collisionBox() {
+  get collisionBox() {
     return this.#view.collisionBox
   }
 
-  get x(){
+  get x() {
     return this.#view.x
   }
-  set x(value){
+  set x(value) {
     this.#view.x = value
   }
-  get y(){
+  get y() {
     return this.#view.y
   }
-  set y(value){
+  set y(value) {
     this.#view.y = value
   }
 
@@ -113,5 +115,25 @@ export default class Hero{
   stopRightMove() {
     this.#directionContext.right = 0
     this.#movement.x = this.#directionContext.left
+  }
+
+  setView(buttonContex) {
+    if (buttonContex.arrowLeft || buttonContex.arrowRight) {
+      if (buttonContex.arrowUp) {
+        this.#view.showRunUp()
+      } else if (buttonContex.arrowDown) {
+        this.#view.showRunDown()
+      } else {
+        this.#view.showRun()
+      }
+    } else {
+      if (buttonContex.arrowUp) {
+        this.#view.showStayUp()
+      } else if (buttonContex.arrowDown) {
+        this.#view.showLay()
+      } else {
+        this.#view.showStay()
+      }
+    }
   }
 }

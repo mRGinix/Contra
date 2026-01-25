@@ -32,20 +32,22 @@ export default class KeyboardProcessor {
   onKeyDown(key) {
     const button = this.#keyMap[key.code]
     if (button != undefined) {
+      button.isDown = true
+
       if (button.hasOwnProperty('executeDown')) {
         button.executeDown.call(this.#gameContext)
       }
-      button.isDown = true
     }
   }
 
   onKeyUp(key) {
     const button = this.#keyMap[key.code]
     if (button != undefined) {
+      button.isDown = false
+
       if (button.hasOwnProperty('executeUp')) {
         button.executeUp.call(this.#gameContext)
       }
-      button.isDown = false
     }
   }
 

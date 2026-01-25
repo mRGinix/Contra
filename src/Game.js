@@ -111,17 +111,49 @@ export default class Game {
         this.#hero.jump()
       }
     }
-    this.keyboardProcessor.getButton('ArrowLeft').executeDown = function () {
+    const arrowLeft = this.keyboardProcessor.getButton('ArrowLeft')
+    arrowLeft.executeDown = function () {
       this.#hero.startLeftMove()
+      this.#hero.setView(this.getArrowButtonContex())
     }
-    this.keyboardProcessor.getButton('ArrowLeft').executeUp = function () {
+    arrowLeft.executeUp = function () {
       this.#hero.stopLeftMove()
+      this.#hero.setView(this.getArrowButtonContex())
     }
-    this.keyboardProcessor.getButton('ArrowRight').executeDown = function () {
+
+    const arrowRight = this.keyboardProcessor.getButton('ArrowRight')
+    arrowRight.executeDown = function () {
       this.#hero.startRightMove()
+      this.#hero.setView(this.getArrowButtonContex())
     }
-    this.keyboardProcessor.getButton('ArrowRight').executeUp = function () {
+    arrowRight.executeUp = function () {
       this.#hero.stopRightMove()
+      this.#hero.setView(this.getArrowButtonContex())
     }
+
+    const arrowUp = this.keyboardProcessor.getButton('ArrowUp')
+    arrowUp.executeDown = function () {
+      this.#hero.setView(this.getArrowButtonContex())
+    }
+    arrowUp.executeUp = function () {
+      this.#hero.setView(this.getArrowButtonContex())
+    }
+
+    const arrowDown = this.keyboardProcessor.getButton('ArrowDown')
+    arrowDown.executeDown = function () {
+      this.#hero.setView(this.getArrowButtonContex())
+    }
+    arrowDown.executeUp = function () {
+      this.#hero.setView(this.getArrowButtonContex())
+    }
+  }
+
+  getArrowButtonContex() {
+    const buttonContext = {}
+    buttonContext.arrowLeft = this.keyboardProcessor.isButtonPressed('ArrowLeft')
+    buttonContext.arrowRight = this.keyboardProcessor.isButtonPressed('ArrowRight')
+    buttonContext.arrowUp = this.keyboardProcessor.isButtonPressed('ArrowUp')
+    buttonContext.arrowDown = this.keyboardProcessor.isButtonPressed('ArrowDown')
+    return buttonContext
   }
 }
