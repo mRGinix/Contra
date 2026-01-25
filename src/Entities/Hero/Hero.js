@@ -24,6 +24,9 @@ export default class Hero {
 
   #state = States.Stay
 
+  #isLay = false
+  #isStayUp = false
+
   #view
 
   constructor(stage) {
@@ -54,7 +57,10 @@ export default class Hero {
     this.#velocityX = this.#movement.x * this.#SPEED
     this.x += this.#velocityX
 
-    if (this.#velocityY > 0 && this.isJumpState()) {
+    if (this.#velocityY > 0 ) {
+      if(!(this.#state == States.Jump || this.#state == States.FlyDown)){
+        this.#view.showFall()
+      }
       this.#state = States.FlyDown
     }
 
@@ -63,6 +69,16 @@ export default class Hero {
   }
 
   stay(platformY) {
+    if (this.#state == States.Jump || this.#state == States.FlyDown) {
+      const fakeButtonContex = {}
+      fakeButtonContex.arrowLeft = this.#movement.x == -1
+      fakeButtonContex.arrowRight = this.#movement.x == 1
+      fakeButtonContex.arrowDown = this.#isLay
+      fakeButtonContex.arrowUp = this.#isStayUp
+      this.#state = States.Stay
+      this.setView(fakeButtonContex)
+    }
+
     this.#state = States.Stay
     this.#velocityY = 0
 
@@ -121,6 +137,12 @@ export default class Hero {
 
   setView(buttonContex) {
     this.#view.flip(this.#movement.x)
+    this.#isLay = buttonContex.arrowDown
+    this.#isStayUp = buttonContex.arrowUp
+
+    if (this.#state == States.Jump || this.#state == States.FlyDown) {
+      return
+    }
 
     if (buttonContex.arrowLeft || buttonContex.arrowRight) {
       if (buttonContex.arrowUp) {

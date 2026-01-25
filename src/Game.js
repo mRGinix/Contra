@@ -105,7 +105,8 @@ export default class Game {
 
   setKeys() {
     this.keyboardProcessor.getButton('Space').executeDown = function () {
-      if (this.keyboardProcessor.isButtonPressed('ArrowDown')) {
+      if (this.keyboardProcessor.isButtonPressed('ArrowDown') 
+        && !(this.keyboardProcessor.isButtonPressed('ArrowLeft') || this.keyboardProcessor.isButtonPressed('ArrowRight'))) {
         this.#hero.throwDown()
       } else {
         this.#hero.jump()
