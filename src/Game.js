@@ -1,5 +1,6 @@
 import { Container } from '../lib/pixi.mjs'
 import Camera from './Camera.js'
+import BulletFactory from './Entities/Bullet/BulletFactory.js'
 import Hero from './Entities/Hero/Hero.js'
 import PlatformFactory from './Entities/Platforms/PlatformFactory.js'
 import KeyboardProcessor from './KeyboardProcessor.js'
@@ -8,21 +9,24 @@ export default class Game {
   #pixiApp
   #hero
   #platforms = []
+  #bullets = []
   #camera
+  #bulletFactory
+  #worldContainer
 
   keyboardProcessor
 
   constructor(pixiApp) {
     this.#pixiApp = pixiApp
 
-    const worldContainer = new Container()
-    this.#pixiApp.stage.addChild(worldContainer)
+    this.#worldContainer = new Container()
+    this.#pixiApp.stage.addChild(this.#worldContainer)
 
-    this.#hero = new Hero(worldContainer)
+    this.#hero = new Hero(this.#worldContainer)
     this.#hero.x = 100
     this.#hero.y = 100
 
-    const platformFactory = new PlatformFactory(worldContainer)
+    const platformFactory = new PlatformFactory(this.#worldContainer)
 
     this.#platforms.push(platformFactory.createPlatform(100, 420))
     this.#platforms.push(platformFactory.createPlatform(300, 420))
@@ -44,12 +48,14 @@ export default class Game {
 
     const cameraSettings = {
       target: this.#hero,
-      world: worldContainer,
+      world: this.#worldContainer,
       screenSize: this.#pixiApp.screen,
-      maxWorldWidth: worldContainer.width,
+      maxWorldWidth: this.#worldContainer.width,
       isBackScrollX: false,
     }
     this.#camera = new Camera(cameraSettings)
+
+    this.#bulletFactory = new BulletFactory()
   }
 
   update() {
@@ -72,6 +78,10 @@ export default class Game {
     }
 
     this.#camera.update()
+
+    for (let i = 0; i < this.#bullets.length; i++) {
+      this.#bullets[i].update()
+    }
   }
 
   getPlatfromCollisionResult(character, platform, prevPoint) {
@@ -120,17 +130,22 @@ export default class Game {
   }
 
   setKeys() {
-    this.keyboardProcessor.getButton('Space').executeDown = function () {
+    this.keyboardProcessor.getButton('KeyA').executeDown = function () {
+      const bullet = this.#bulletFactory.createBullet(this.#hero.x, this.#hero.y)
+      this.#worldContainer.addChild(bullet)
+      this.#bullets.push(bullet)
+    }
+    this.keyboardProcessor.getButton('KeyS').executeDown = function () {
       if (
-        this.keyboardProcessor.isButtonPressed('KeyS') &&
-        !(this.keyboardProcessor.isButtonPressed('KeyA') || this.keyboardProcessor.isButtonPressed('KeyD'))
+        this.keyboardProcessor.isButtonPressed('ArrowDown') &&
+        !(this.keyboardProcessor.isButtonPressed('ArrowLeft') || this.keyboardProcessor.isButtonPressed('ArrowRight'))
       ) {
         this.#hero.throwDown()
       } else {
         this.#hero.jump()
       }
     }
-    const arrowLeft = this.keyboardProcessor.getButton('KeyA')
+    const arrowLeft = this.keyboardProcessor.getButton('ArrowLeft')
     arrowLeft.executeDown = function () {
       this.#hero.startLeftMove()
       this.#hero.setView(this.getArrowButtonContex())
@@ -140,7 +155,7 @@ export default class Game {
       this.#hero.setView(this.getArrowButtonContex())
     }
 
-    const arrowRight = this.keyboardProcessor.getButton('KeyD')
+    const arrowRight = this.keyboardProcessor.getButton('ArrowRight')
     arrowRight.executeDown = function () {
       this.#hero.startRightMove()
       this.#hero.setView(this.getArrowButtonContex())
@@ -150,7 +165,7 @@ export default class Game {
       this.#hero.setView(this.getArrowButtonContex())
     }
 
-    const arrowUp = this.keyboardProcessor.getButton('KeyW')
+    const arrowUp = this.keyboardProcessor.getButton('ArrowUp')
     arrowUp.executeDown = function () {
       this.#hero.setView(this.getArrowButtonContex())
     }
@@ -158,7 +173,7 @@ export default class Game {
       this.#hero.setView(this.getArrowButtonContex())
     }
 
-    const arrowDown = this.keyboardProcessor.getButton('KeyS')
+    const arrowDown = this.keyboardProcessor.getButton('ArrowDown')
     arrowDown.executeDown = function () {
       this.#hero.setView(this.getArrowButtonContex())
     }
@@ -169,10 +184,10 @@ export default class Game {
 
   getArrowButtonContex() {
     const buttonContext = {}
-    buttonContext.arrowLeft = this.keyboardProcessor.isButtonPressed('KeyD')
-    buttonContext.arrowRight = this.keyboardProcessor.isButtonPressed('KeyA')
-    buttonContext.arrowUp = this.keyboardProcessor.isButtonPressed('KeyW')
-    buttonContext.arrowDown = this.keyboardProcessor.isButtonPressed('KeyS')
+    buttonContext.arrowLeft = this.keyboardProcessor.isButtonPressed('ArrowLeft')
+    buttonContext.arrowRight = this.keyboardProcessor.isButtonPressed('ArrowRight')
+    buttonContext.arrowUp = this.keyboardProcessor.isButtonPressed('ArrowUp')
+    buttonContext.arrowDown = this.keyboardProcessor.isButtonPressed('ArrowDown')
     return buttonContext
   }
 }

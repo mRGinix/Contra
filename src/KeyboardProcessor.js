@@ -1,21 +1,21 @@
 export default class KeyboardProcessor {
   #keyMap = {
-    Space: {
-      isDown: false,
-    },
-    KeyZ: {
-      isDown: false,
-    },
-    KeyD: {
+    KeyS: {
       isDown: false,
     },
     KeyA: {
       isDown: false,
     },
-    KeyW: {
+    ArrowLeft: {
       isDown: false,
     },
-    KeyS: {
+    ArrowRight: {
+      isDown: false,
+    },
+    ArrowUp: {
+      isDown: false,
+    },
+    ArrowDown: {
       isDown: false,
     },
   }
