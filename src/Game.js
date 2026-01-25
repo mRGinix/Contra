@@ -28,7 +28,7 @@ export default class Game {
     this.#platforms.push(platformFactory.createPlatform(300, 420))
     this.#platforms.push(platformFactory.createPlatform(500, 420))
     this.#platforms.push(platformFactory.createPlatform(700, 420))
-    this.#platforms.push(platformFactory.createPlatform(900, 420))
+    this.#platforms.push(platformFactory.createPlatform(1100, 420))
 
     this.#platforms.push(platformFactory.createPlatform(300, 560))
 

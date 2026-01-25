@@ -4,6 +4,7 @@ export default class Camera {
   #isBackScroll
   #centerScreenPointX
   #rightBorderWorldPointX
+  #lastTargetX = 0
 
   constructor(cameraSettings) {
     this.#target = cameraSettings.target
@@ -14,8 +15,13 @@ export default class Camera {
     this.#rightBorderWorldPointX = this.#world.width - this.#centerScreenPointX
   }
   update() {
-    if (this.#target.x > this.#centerScreenPointX) {
+    if (
+      this.#target.x > this.#centerScreenPointX &&
+      this.#target.x < this.#rightBorderWorldPointX &&
+      (this.isBackScroll || this.#target.x > this.#lastTargetX)
+    ) {
       this.#world.x = this.#centerScreenPointX - this.#target.x
+      this.#lastTargetX = this.#target.x
     }
   }
 }
