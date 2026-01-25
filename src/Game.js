@@ -47,7 +47,7 @@ export default class Game {
       world: worldContainer,
       screenSize: this.#pixiApp.screen,
       maxWorldWidth: worldContainer.width,
-      isBackScrollX: true,
+      isBackScrollX: false,
     }
     this.#camera = new Camera(cameraSettings)
   }
