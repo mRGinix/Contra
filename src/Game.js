@@ -105,14 +105,14 @@ export default class Game {
 
   setKeys() {
     this.keyboardProcessor.getButton('Space').executeDown = function () {
-      if (this.keyboardProcessor.isButtonPressed('ArrowDown') 
-        && !(this.keyboardProcessor.isButtonPressed('ArrowLeft') || this.keyboardProcessor.isButtonPressed('ArrowRight'))) {
+      if (this.keyboardProcessor.isButtonPressed('KeyS') 
+        && !(this.keyboardProcessor.isButtonPressed('KeyA') || this.keyboardProcessor.isButtonPressed('KeyD'))) {
         this.#hero.throwDown()
       } else {
         this.#hero.jump()
       }
     }
-    const arrowLeft = this.keyboardProcessor.getButton('ArrowLeft')
+    const arrowLeft = this.keyboardProcessor.getButton('KeyA')
     arrowLeft.executeDown = function () {
       this.#hero.startLeftMove()
       this.#hero.setView(this.getArrowButtonContex())
@@ -122,7 +122,7 @@ export default class Game {
       this.#hero.setView(this.getArrowButtonContex())
     }
 
-    const arrowRight = this.keyboardProcessor.getButton('ArrowRight')
+    const arrowRight = this.keyboardProcessor.getButton('KeyD')
     arrowRight.executeDown = function () {
       this.#hero.startRightMove()
       this.#hero.setView(this.getArrowButtonContex())
@@ -132,7 +132,7 @@ export default class Game {
       this.#hero.setView(this.getArrowButtonContex())
     }
 
-    const arrowUp = this.keyboardProcessor.getButton('ArrowUp')
+    const arrowUp = this.keyboardProcessor.getButton('KeyW')
     arrowUp.executeDown = function () {
       this.#hero.setView(this.getArrowButtonContex())
     }
@@ -140,7 +140,7 @@ export default class Game {
       this.#hero.setView(this.getArrowButtonContex())
     }
 
-    const arrowDown = this.keyboardProcessor.getButton('ArrowDown')
+    const arrowDown = this.keyboardProcessor.getButton('KeyS')
     arrowDown.executeDown = function () {
       this.#hero.setView(this.getArrowButtonContex())
     }
@@ -151,10 +151,10 @@ export default class Game {
 
   getArrowButtonContex() {
     const buttonContext = {}
-    buttonContext.arrowLeft = this.keyboardProcessor.isButtonPressed('ArrowLeft')
-    buttonContext.arrowRight = this.keyboardProcessor.isButtonPressed('ArrowRight')
-    buttonContext.arrowUp = this.keyboardProcessor.isButtonPressed('ArrowUp')
-    buttonContext.arrowDown = this.keyboardProcessor.isButtonPressed('ArrowDown')
+    buttonContext.arrowLeft = this.keyboardProcessor.isButtonPressed('KeyD')
+    buttonContext.arrowRight = this.keyboardProcessor.isButtonPressed('KeyA')
+    buttonContext.arrowUp = this.keyboardProcessor.isButtonPressed('KeyW')
+    buttonContext.arrowDown = this.keyboardProcessor.isButtonPressed('KeyS')
     return buttonContext
   }
 }

@@ -33,7 +33,8 @@ export default class Hero {
     this.#view = new HeroView()
     stage.addChild(this.#view)
 
-    this.#view.showStay()
+    this.#state = States.Jump
+    this.#view.showJump()
   }
 
   get collisionBox() {

@@ -3,19 +3,19 @@ export default class KeyboardProcessor {
     Space: {
       isDown: false,
     },
+    KeyZ: {
+      isDown: false,
+    },
+    KeyD: {
+      isDown: false,
+    },
     KeyA: {
       isDown: false,
     },
-    ArrowLeft: {
+    KeyW: {
       isDown: false,
     },
-    ArrowRight: {
-      isDown: false,
-    },
-    ArrowUp: {
-      isDown: false,
-    },
-    ArrowDown: {
+    KeyS: {
       isDown: false,
     },
   }
