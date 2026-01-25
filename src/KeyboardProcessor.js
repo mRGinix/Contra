@@ -1,6 +1,6 @@
 export default class KeyboardProcessor {
   #keyMap = {
-    KeyS: {
+    Space: {
       isDown: false,
     },
     KeyA: {

@@ -75,6 +75,7 @@ export default class Hero {
     }
     this.#state = States.Jump
     this.#velocityY -= this.#JUMP_FORCE
+    this.#view.showJump()
   }
 
   isJumpState() {
@@ -83,6 +84,7 @@ export default class Hero {
 
   throwDown() {
     this.#state = States.Jump
+    this.#view.showFall()
   }
 
   startLeftMove() {
@@ -118,6 +120,8 @@ export default class Hero {
   }
 
   setView(buttonContex) {
+    this.#view.flip(this.#movement.x)
+
     if (buttonContex.arrowLeft || buttonContex.arrowRight) {
       if (buttonContex.arrowUp) {
         this.#view.showRunUp()
