@@ -1,3 +1,5 @@
+import { Container } from '../lib/pixi.mjs'
+import Camera from './Camera.js'
 import Hero from './Entities/Hero/Hero.js'
 import PlatformFactory from './Entities/Platforms/PlatformFactory.js'
 import KeyboardProcessor from './KeyboardProcessor.js'
@@ -6,18 +8,21 @@ export default class Game {
   #pixiApp
   #hero
   #platforms = []
+  #camera
 
   keyboardProcessor
 
   constructor(pixiApp) {
     this.#pixiApp = pixiApp
 
-    this.#hero = new Hero(this.#pixiApp.stage)
+    const worldContainer = new Container()
+    this.#pixiApp.stage.addChild(worldContainer)
+
+    this.#hero = new Hero(worldContainer)
     this.#hero.x = 100
     this.#hero.y = 100
-    // this.#pixiApp.stage.addChild(this.#hero)
 
-    const platformFactory = new PlatformFactory(this.#pixiApp)
+    const platformFactory = new PlatformFactory(worldContainer)
 
     this.#platforms.push(platformFactory.createPlatform(100, 420))
     this.#platforms.push(platformFactory.createPlatform(300, 420))
@@ -36,6 +41,15 @@ export default class Game {
 
     this.keyboardProcessor = new KeyboardProcessor(this)
     this.setKeys()
+
+    const cameraSettings = {
+      target: this.#hero,
+      world: worldContainer,
+      screenSize: this.#pixiApp.screen,
+      maxWorldWidth: worldContainer.width,
+      isBackScrollX: true,
+    }
+    this.#camera = new Camera(cameraSettings)
   }
 
   update() {
@@ -56,6 +70,8 @@ export default class Game {
         this.#hero.stay(this.#platforms[i].y)
       }
     }
+
+    this.#camera.update()
   }
 
   getPlatfromCollisionResult(character, platform, prevPoint) {
@@ -105,8 +121,10 @@ export default class Game {
 
   setKeys() {
     this.keyboardProcessor.getButton('Space').executeDown = function () {
-      if (this.keyboardProcessor.isButtonPressed('KeyS') 
-        && !(this.keyboardProcessor.isButtonPressed('KeyA') || this.keyboardProcessor.isButtonPressed('KeyD'))) {
+      if (
+        this.keyboardProcessor.isButtonPressed('KeyS') &&
+        !(this.keyboardProcessor.isButtonPressed('KeyA') || this.keyboardProcessor.isButtonPressed('KeyD'))
+      ) {
         this.#hero.throwDown()
       } else {
         this.#hero.jump()
