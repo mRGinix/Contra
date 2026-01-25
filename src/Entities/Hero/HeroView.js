@@ -12,38 +12,51 @@ export default class HeroView extends Container {
     width: 0,
     height: 0,
   }
+
+  #stm = {
+    currentState: 'default',
+    states: {},
+  }
+
+  #rootNode
+
   constructor() {
     super()
+    this.#createNodeStructure()
 
+    this.#rootNode.pivot.x = 10
+    this.#rootNode.x = 10
     this.#bounds.width = 20
     this.#bounds.height = 90
     this.#collisionBox.width = this.#bounds.width
     this.#collisionBox.height = this.#bounds.height
 
-    const images = []
-    images.push(this.#getStayImage())
-    images.push(this.#getStayUpImage())
-    images.push(this.#getRunImage())
-    images.push(this.#getRunUpImage())
-    images.push(this.#getRunDownImage())
-    images.push(this.#getLayImage())
-    images.push(this.#getJumpImage())
-    images.push(this.#getFallImage())
+    this.#stm.states.stay = this.#getStayImage()
+    this.#stm.states.stayUp = this.#getStayUpImage()
+    this.#stm.states.run = this.#getRunImage()
+    this.#stm.states.runUp = this.#getRunUpImage()
+    this.#stm.states.runDown = this.#getRunDownImage()
+    this.#stm.states.lay = this.#getLayImage()
+    this.#stm.states.jump = this.#getJumpImage()
+    this.#stm.states.fall = this.#getFallImage()
 
-    for (let i = 0; i < images.length; i++) {
-      this.addChild(images[i])
-      images[i].x = 120 * i
+    for (let key in this.#stm.states) {
+      this.#rootNode.addChild(this.#stm.states[key])
     }
 
-    // view.pivot.x = 10
-    // view.x = 10
-    // view.scale.x *= -1
+    // view.#rootNode.scale.x *= -1
   }
 
   get collisionBox() {
     this.#collisionBox.x = this.x
     this.#collisionBox.y = this.y
     return this.#collisionBox
+  }
+
+  #createNodeStructure() {
+    const rootNode = new Container()
+    this.addChild(rootNode)
+    this.#rootNode = rootNode
   }
 
   #getStayImage() {
@@ -58,7 +71,7 @@ export default class HeroView extends Container {
     const view = new Graphics()
     view.lineStyle(2, 0xffff00)
     view.drawRect(0, 0, 20, 90)
-    view.drawRect(0, -40, 5, 40)
+    view.drawRect(8, -40, 5, 40)
     return view
   }
 
