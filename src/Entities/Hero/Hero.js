@@ -62,9 +62,9 @@ export default class Hero {
   }
 
   get bulletContext() {
-    this.#bulletContext.x = this.x
-    this.#bulletContext.y = this.y
-    this.#bulletContext.angle = this.#bulletAngle
+    this.#bulletContext.x = this.x + this.#view.bulletPointShift.x
+    this.#bulletContext.y = this.y + this.#view.bulletPointShift.y
+    this.#bulletContext.angle = this.#view.isFliped ? this.#bulletAngle * -1 + 180 : this.#bulletAngle
     return this.#bulletContext
   }
 

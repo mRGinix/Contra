@@ -15,6 +15,12 @@ export default class HeroView extends Container {
     currentState: 'default',
     states: {},
   }
+
+  #bulletPointShift = {
+    x: 0,
+    y: 0,
+  }
+
   #rootNode
 
   constructor() {
@@ -48,26 +54,41 @@ export default class HeroView extends Container {
     return this.#collisionBox
   }
 
+  get isFliped() {
+    return this.#rootNode.scale.x == -1
+  }
+
+  get bulletPointShift() {
+    return this.#bulletPointShift
+  }
+
   showStay() {
     this.#toState('stay')
+    this.#setBulletPointShift(65, 30)
   }
   showStayUp() {
     this.#toState('stayUp')
+    this.#setBulletPointShift(-2, -40)
   }
   showRun() {
     this.#toState('run')
+    this.#setBulletPointShift(65, 30)
   }
   showRunUp() {
     this.#toState('runUp')
+    this.#setBulletPointShift(40, -20)
   }
   showRunDown() {
     this.#toState('runDown')
+    this.#setBulletPointShift(20, 55)
   }
   showLay() {
     this.#toState('lay')
+    this.#setBulletPointShift(65, 70)
   }
   showJump() {
     this.#toState('jump')
+    this.#setBulletPointShift(-2, 40)
   }
   showFall() {
     this.#toState('fall')
@@ -96,6 +117,11 @@ export default class HeroView extends Container {
     const rootNode = new Container()
     this.addChild(rootNode)
     this.#rootNode = rootNode
+  }
+
+  #setBulletPointShift(x, y) {
+    this.#bulletPointShift.x = (x + this.#rootNode.pivot.x * this.#rootNode.scale.x) * this.#rootNode.scale.x
+    this.#bulletPointShift.y = y
   }
 
   #getStayImage() {
