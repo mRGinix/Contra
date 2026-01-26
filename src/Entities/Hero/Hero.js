@@ -22,12 +22,19 @@ export default class Hero {
     right: 0,
   }
 
+  #bulletContext = {
+    x: 0,
+    y: 0,
+    angle: 0,
+  }
+
   #state = States.Stay
 
   #isLay = false
   #isStayUp = false
 
   #view
+  #bulletAngle
 
   constructor(stage) {
     this.#view = new HeroView()
@@ -54,12 +61,19 @@ export default class Hero {
     this.#view.y = value
   }
 
+  get bulletContext() {
+    this.#bulletContext.x = this.x
+    this.#bulletContext.y = this.y
+    this.#bulletContext.angle = this.#bulletAngle
+    return this.#bulletContext
+  }
+
   update() {
     this.#velocityX = this.#movement.x * this.#SPEED
     this.x += this.#velocityX
 
-    if (this.#velocityY > 0 ) {
-      if(!(this.#state == States.Jump || this.#state == States.FlyDown)){
+    if (this.#velocityY > 0) {
+      if (!(this.#state == States.Jump || this.#state == States.FlyDown)) {
         this.#view.showFall()
       }
       this.#state = States.FlyDown
@@ -71,13 +85,13 @@ export default class Hero {
 
   stay(platformY) {
     if (this.#state == States.Jump || this.#state == States.FlyDown) {
-      const fakeButtonContex = {}
-      fakeButtonContex.arrowLeft = this.#movement.x == -1
-      fakeButtonContex.arrowRight = this.#movement.x == 1
-      fakeButtonContex.arrowDown = this.#isLay
-      fakeButtonContex.arrowUp = this.#isStayUp
+      const fakebuttonContext = {}
+      fakebuttonContext.arrowLeft = this.#movement.x == -1
+      fakebuttonContext.arrowRight = this.#movement.x == 1
+      fakebuttonContext.arrowDown = this.#isLay
+      fakebuttonContext.arrowUp = this.#isStayUp
       this.#state = States.Stay
-      this.setView(fakeButtonContex)
+      this.setView(fakebuttonContext)
     }
 
     this.#state = States.Stay
@@ -136,30 +150,54 @@ export default class Hero {
     this.#movement.x = this.#directionContext.left
   }
 
-  setView(buttonContex) {
+  setView(buttonContext) {
     this.#view.flip(this.#movement.x)
-    this.#isLay = buttonContex.arrowDown
-    this.#isStayUp = buttonContex.arrowUp
+    this.#isLay = buttonContext.arrowDown
+    this.#isStayUp = buttonContext.arrowUp
+
+    this.#setBulletAngle(buttonContext)
 
     if (this.#state == States.Jump || this.#state == States.FlyDown) {
       return
     }
 
-    if (buttonContex.arrowLeft || buttonContex.arrowRight) {
-      if (buttonContex.arrowUp) {
+    if (buttonContext.arrowLeft || buttonContext.arrowRight) {
+      if (buttonContext.arrowUp) {
         this.#view.showRunUp()
-      } else if (buttonContex.arrowDown) {
+        this.#bulletAngle = -45
+      } else if (buttonContext.arrowDown) {
         this.#view.showRunDown()
       } else {
         this.#view.showRun()
+        this.#bulletAngle = 0
       }
     } else {
-      if (buttonContex.arrowUp) {
+      if (buttonContext.arrowUp) {
         this.#view.showStayUp()
-      } else if (buttonContex.arrowDown) {
+      } else if (buttonContext.arrowDown) {
         this.#view.showLay()
       } else {
         this.#view.showStay()
+      }
+    }
+  }
+
+  #setBulletAngle(buttonContext) {
+    if (buttonContext.arrowLeft || buttonContext.arrowRight) {
+      if (buttonContext.arrowUp) {
+        this.#bulletAngle = -45
+      } else if (buttonContext.arrowDown) {
+        this.#bulletAngle = 45
+      } else {
+        this.#bulletAngle = 0
+      }
+    } else {
+      if (buttonContext.arrowUp) {
+        this.#bulletAngle = -90
+      } else if (buttonContext.arrowDown && this.#state == States.Jump) {
+        this.#bulletAngle = 90
+      } else {
+        this.#bulletAngle = 0
       }
     }
   }
