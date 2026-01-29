@@ -4,6 +4,8 @@ export default class extends Container {
   #SPEED = 10
   #angle
 
+  isDead
+
   constructor(angle) {
     super()
 
