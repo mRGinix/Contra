@@ -94,8 +94,9 @@ export default class Game {
     if (collisionResult.horizontal == true && platform.type == 'box') {
       if (platform.isStep) {
         character.stay(platform.y)
+      } else {
+        character.x = prevPoint.x
       }
-      character.x = prevPoint.x
     }
   }
 
