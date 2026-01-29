@@ -28,6 +28,11 @@ export default class Hero {
     angle: 0,
   }
 
+  #prevPoint = {
+    x: 0,
+    y: 0,
+  }
+
   #state = States.Stay
 
   #isLay = false
@@ -68,7 +73,14 @@ export default class Hero {
     return this.#bulletContext
   }
 
+get prevPoint(){
+  return this.#prevPoint
+}
+
   update() {
+    this.#prevPoint.x = this.x
+    this.#prevPoint.y = this.y
+
     this.#velocityX = this.#movement.x * this.#SPEED
     this.x += this.#velocityX
 
