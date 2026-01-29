@@ -7,9 +7,9 @@ const States = {
 }
 
 export default class Runner {
-  #GRAVITY_FORCE = 0.018
-  #SPEED = 1.1
-  #JUMP_FORCE = 2.3
+  #GRAVITY_FORCE = 0.2
+  #SPEED = 3
+  #JUMP_FORCE = 8
   #velocityX = 0
   #velocityY = 0
 

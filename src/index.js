@@ -7,6 +7,9 @@ const pixiApp = new PIXI.Application({
 })
 const game = new Game(pixiApp)
 
+pixiApp.ticker.maxFPS = 60; 
+pixiApp.ticker.minFPS = 30;
+
 document.body.appendChild(pixiApp.view)
 
 document.addEventListener('keydown', key => game.keyboardProcessor.onKeyDown(key))

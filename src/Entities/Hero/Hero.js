@@ -7,9 +7,9 @@ const States = {
   FlyDown: 'flyDown',
 }
 export default class Hero {
-  #GRAVITY_FORCE = 0.018
-  #SPEED = 2
-  #JUMP_FORCE = 3
+  #GRAVITY_FORCE = 0.2
+  #SPEED = 6
+  #JUMP_FORCE = 8
   #velocityX = 0
   #velocityY = 0
 
