@@ -7,7 +7,7 @@ export default class extends Container {
   constructor(angle) {
     super()
 
-    this.#angle = angle
+    this.#angle = (angle * Math.PI) / 180
 
     const view = new Graphics()
     view.lineStyle(1, 0xffff00)

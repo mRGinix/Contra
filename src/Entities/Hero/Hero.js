@@ -161,9 +161,9 @@ export default class Hero {
     this.#isLay = buttonContext.arrowDown
     this.#isStayUp = buttonContext.arrowUp
 
-    this.#heroWeaponUnit.setBulletAngle(buttonContext)
+    this.#heroWeaponUnit.setBulletAngle(buttonContext, this.isJumpState())
 
-    if (this.#state == States.Jump || this.#state == States.FlyDown) {
+    if (this.isJumpState() || this.#state == States.FlyDown) {
       return
     }
 
